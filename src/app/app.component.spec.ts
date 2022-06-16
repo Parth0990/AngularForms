@@ -20,16 +20,16 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'AngularCrud'`, () => {
+  it(`should have as title 'Angular-CRUD-forms'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('AngularCrud');
+    expect(app.title).toEqual('Angular-CRUD-forms');
   });
 
   it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.content span')?.textContent).toContain('AngularCrud app is running!');
+    expect(compiled.querySelector('.content span')?.textContent).toContain('Angular-CRUD-forms app is running!');
   });
 });
