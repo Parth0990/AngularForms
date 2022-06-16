@@ -10,12 +10,12 @@
       <input
         type="text"
         [class.invalidBorder]="nameControl.invalid && nameControl.touched"
-        ngModel
+        [(ngModel)]="employee.name"
         class="form-control"
         name="name"
         id="name"
         #nameControl="ngModel"
-        required="{{required}}"
+        required="{{ required }}"
       />
       <span
         [class.invalidColor]="nameControl.invalid && nameControl.touched"
@@ -25,15 +25,22 @@
     </div>
 
     <div class="form-group mb-3 has-error">
-      <label class="form-label">Contact Preference</label>
+      <label
+        class="form-label"
+        [class.invalidColor]="choicecontrol.invalid && choicecontrol.touched"
+        >Contact Preference</label
+      >
       <div class="form-control">
-        <label class="radio-inline mx-3" [class.invalidColor]="choicecontrol.invalid && choicecontrol.touched"
-          ><input
+        <label class="radio-inline mx-3">
+          <input
             type="radio"
             value="phoneNumber"
-            ngModel
+            [(ngModel)]="employee.contactPreference"
             name="contactPreference"
-            required="{{required}}"
+            required="{{ required }}"
+            [class.invalidBorder]="
+              choicecontrol.invalid && choicecontrol.touched
+            "
             #choicecontrol="ngModel"
           />Phone Number</label
         >
@@ -41,102 +48,201 @@
           ><input
             type="radio"
             value="email"
-            ngModel
+            [(ngModel)]="employee.contactPreference"
             name="contactPreference"
+            required="{{ required }}"
+            [class.invalidBorder]="
+              choicecontrol.invalid && choicecontrol.touched
+            "
           />Email</label
         >
       </div>
     </div>
 
-    <div class="mb-3">
-      <label for="exampleInputEmail1" class="form-label" [class.invalidColor]="emailcontrol.invalid && emailcontrol.touched">Email address</label>
-      <input
-        type="email"
-        ngModel
-        name="email"
-        class="form-control"
-        id="exampleInputEmail1"
-        required="{{required}}"
-        [class.invalidColor]="emailcontrol.invalid && emailcontrol.touched"
-        #emailcontrol="ngModel"
-        aria-describedby="emailHelp"
-      />
-      <div id="emailHelp" class="form-text">
-        We'll never share your email with anyone else.
-      </div>
-      <span
-      [class.invalidColor]="emailcontrol.invalid && emailcontrol.touched"
-      *ngIf="emailcontrol.invalid && emailcontrol.touched"
-      >Required Field</span
-    >
-    </div>
+    <div>
+      <div class="mb-3" *ngIf="employeeForm.value.contactPreference == 'email'">
+        <label
+          for="exampleInputEmail1"
+          class="form-label"
+          [class.invalidColor]="emailcontrol.invalid && emailcontrol.touched"
+          >Email address</label
+        >
+        <input
+          type="email"
+          [(ngModel)]="employee.email"
+          name="email"
+          pattern="^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$"
+          class="form-control"
+          id="exampleInputEmail1"
+          required="{{ employeeForm.value.contactPreference == 'email' }}"
+          [class.invalidBorder]="emailcontrol.invalid && emailcontrol.touched"
+          #emailcontrol="ngModel"
+          aria-describedby="emailHelp"
+        />
 
-    <div class="mb-3">
-      <label for="phoneNumber" class="form-label">Phone Number</label>
-      <input
-        type="text"
-        ngModel
-        name="phoneNumber"
-        class="form-control"
-        id="phoneNumber"
-      />
+        <span
+        [class.invalidColor]="emailcontrol.errors?.['required'] && emailcontrol.touched"
+          *ngIf="emailcontrol.errors?.['required'] && emailcontrol.touched"
+          >Required Field</span
+        >
+        <span
+          [class.invalidColor]="emailcontrol.errors?.['pattern'] && emailcontrol.touched"
+          *ngIf="emailcontrol.errors?.['pattern'] && emailcontrol.touched"
+          >Match Pattern</span
+        >
+      </div>
+
+      <div
+        class="mb-3"
+        *ngIf="employeeForm.value.contactPreference == 'phoneNumber'"
+      >
+        <label
+          for="phoneNumber"
+          class="form-label"
+          [class.invalidColor]="
+            phoneNumbercontrol.invalid && phoneNumbercontrol.touched
+          "
+          >Phone Number</label
+        >
+        <input
+          type="tel"
+          pattern="^[789]\d{9}$"
+          [(ngModel)]="employee.phoneNumber"
+          #phoneNumbercontrol="ngModel"
+          name="phoneNumber"
+          class="form-control"
+          id="phoneNumber"
+          required="{{ employeeForm.value.contactPreference == 'phoneNumber' }}"
+          [class.invalidBorder]="
+            phoneNumbercontrol.invalid && phoneNumbercontrol.touched
+          "
+        />
+        <span
+          [class.invalidColor]="
+            phoneNumbercontrol.errors?.['required'] && phoneNumbercontrol.touched
+          "
+          *ngIf="phoneNumbercontrol.errors?.['required'] && phoneNumbercontrol.touched"
+          >Required Field</span
+        >
+
+        <span
+          [class.invalidColor]="
+          phoneNumbercontrol.errors?.['pattern']  && phoneNumbercontrol.touched  "
+          *ngIf="phoneNumbercontrol.touched && phoneNumbercontrol.errors?.['pattern']" 
+          > Match Pattern </span
+        >
+      </div>
     </div>
 
     <div class="form-group mb-3">
       <label class="form-label">Gender</label>
       <div class="form-control">
         <label class="radio-inline mx-3"
-          ><input type="radio" value="male" ngModel name="gender" />Male</label
+          ><input
+            type="radio"
+            value="male"
+            [(ngModel)]="employee.gender"
+            name="gender"
+            required="{{ required }}"
+            [class.invalidBorder]="
+              choicecontrol.invalid && choicecontrol.touched
+            "
+          />Male</label
         >
         <label for="exampleInputEmail1" class="radio-inline"
           ><input
             type="radio"
             value="female"
-            ngModel
+            [(ngModel)]="employee.gender"
             name="gender"
+            required="{{ required }}"
+            [class.invalidBorder]="
+              choicecontrol.invalid && choicecontrol.touched
+            "
           />Female</label
         >
       </div>
     </div>
 
     <div class="form-group mb-3">
-      <label for="dateOfBirth">Date of Birth</label>
+      <label
+        for="dateOfBirth"
+        [class.invalidColor]="datecontrol.invalid && datecontrol.touched"
+        >Date of Birth</label
+      >
       <input
         id="dateOfBirth"
         name="dateOfBirth"
-        ngModel
+        [(ngModel)]="employee.dateOfBirth"
         class="form-control"
         type="date"
+        #datecontrol="ngModel"
+        required="{{ required }}"
+        [class.invalidBorder]="datecontrol.invalid && datecontrol.touched"
       />
+      <span
+        [class.invalidColor]="datecontrol.invalid && datecontrol.touched"
+        *ngIf="datecontrol.invalid && datecontrol.touched"
+        >Required Field</span
+      >
     </div>
 
     <div class="mb-3">
-      <label for="department">Department</label>
-      <select class="form-control" id="department" name="department" ngModel>
+      <label
+        for="department"
+        [class.invalidColor]="deptcontrol.invalid && deptcontrol.touched"
+        >Department</label
+      >
+      <select
+        class="form-control"
+        id="department"
+        name="department"
+        [(ngModel)]="employee.department"
+        #deptcontrol="ngModel"
+        required="{{ required }}"
+        [class.invalidBorder]="deptcontrol.invalid && deptcontrol.touched"
+      >
         <option *ngFor="let dept of departments" [value]="dept.id">
           {{ dept.name }}
         </option>
       </select>
+      <span
+        [class.invalidColor]="deptcontrol.invalid && deptcontrol.touched"
+        *ngIf="deptcontrol.invalid && deptcontrol.touched"
+        >Required Field</span
+      >
     </div>
 
     <div class="form-group mb-3">
       <div class="form-control">
         <label for="" class="checkbox-inline">
-          <input type="checkbox" [(ngModel)]="isActive" name="isActive" /> is
+          <input type="checkbox" [(ngModel)]="employee.isActive" name="isActive" /> is
           Active
         </label>
       </div>
     </div>
 
     <div class="form-group mb-3">
-      <label for="photoPath">Photo Path</label>
+      <label
+        for="photoPath"
+        [class.invalidColor]="imgcontrol.invalid && imgcontrol.touched"
+        >Photo Path</label
+      >
       <input
         id="photoPath"
         name="photoPath"
-        [(ngModel)]="photoPath"
+        [(ngModel)]="employee.photoPath"
+        #imgcontrol="ngModel"
+        required="{{ required }}"
+        [class.invalidBorder]="imgcontrol.invalid && imgcontrol.touched"
         type="text"
         class="form-control"
       />
+      <span
+        [class.invalidColor]="imgcontrol.invalid && imgcontrol.touched"
+        *ngIf="imgcontrol.invalid && imgcontrol.touched"
+        >Required Field</span
+      >
     </div>
 
     <div class="form-group mb-3">
@@ -150,7 +256,7 @@
     </div>
 
     <div class="form-group mb-3">
-      <img [src]="photoPath" class="imageClass" *ngIf="previewPhoto" />
+      <img [src]="employee.photoPath" class="imageClass" *ngIf="previewPhoto" />
     </div>
 
     <button

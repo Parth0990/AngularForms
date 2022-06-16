@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { FormControl, NgForm, Validators } from '@angular/forms';
 import { Department } from '../models/deptartment.model';
+import { Employee } from '../models/employee.model';
 
 @Component({
   selector: 'app-create-employee',
@@ -8,7 +9,21 @@ import { Department } from '../models/deptartment.model';
   styleUrls: ['./create-employee.component.css']
 })
 export class CreateEmployeeComponent implements OnInit {
-  
+
+  dateOfBirth: Date = new Date(2022, 0 , 30);
+  employee: Employee = {
+    id: 0,
+    name:"",
+    gender: "",
+    email:"",
+    phoneNumber:0,
+    contactPreference:"",
+    dateOfBirth: this.dateOfBirth,
+    department:"",
+    isActive:false,
+    photoPath:""
+  }
+
   departments: Department[]=[
     {id:'D1',name:'Help Desk'},
     {id:'D2',name:'HR'},
@@ -37,4 +52,7 @@ required:boolean=true;
     console.log(empForm.value);
     console.log(empForm);
   }
+
+    
+  
 }
