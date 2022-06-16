@@ -3,7 +3,9 @@ export class Employee{
     name: string="";
     gender: string="";
     email?:string;
+    password?: string;
     phoneNumber?:number;
+    confirmPassword?: string;
     contactPreference:string="";
     dateOfBirth?:Date;
     department:string="";
