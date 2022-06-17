@@ -1,6 +1,5 @@
 import { Directive, Input } from "@angular/core";
-import { AbstractControl, NG_VALIDATORS, ValidationErrors, Validator } from "@angular/forms";
-import { SelectRequiredValidatorDirective } from "./select.required.validator.directive";
+import { AbstractControl, NG_VALIDATORS, Validator } from "@angular/forms";
 
 @Directive({
     selector: '[appConfirmEqualValidator]',

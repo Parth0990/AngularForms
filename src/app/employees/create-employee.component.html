@@ -1,4 +1,4 @@
-<form #employeeForm="ngForm" (ngSubmit)="saveEmployee(employeeForm)">
+<form #employeeForm="ngForm" (ngSubmit)="saveEmployees()">
   <div class="mb-3 form-group">
     <div class="mb-3">
       <label
@@ -82,7 +82,7 @@
         />
 
         <span
-        [class.invalidColor]="emailcontrol.errors?.['required'] && emailcontrol.touched"
+          [class.invalidColor]="emailcontrol.errors?.['required'] && emailcontrol.touched"
           *ngIf="emailcontrol.errors?.['required'] && emailcontrol.touched"
           >Required Field</span
         >
@@ -129,9 +129,10 @@
         <span
           [class.invalidColor]="
           phoneNumbercontrol.errors?.['pattern']  && phoneNumbercontrol.touched  "
-          *ngIf="phoneNumbercontrol.touched && phoneNumbercontrol.errors?.['pattern']" 
-          > Match Pattern </span
+          *ngIf="phoneNumbercontrol.touched && phoneNumbercontrol.errors?.['pattern']"
         >
+          Match Pattern
+        </span>
       </div>
     </div>
 
@@ -193,19 +194,38 @@
     <div class="mb-3">
       <label
         for="department"
-        [class.invalidColor]="(deptcontrol.invalid && deptcontrol.touched) || (employeeForm.value.department == 'null' && deptcontrol.touched)"
+        [class.invalidColor]="
+          (deptcontrol.invalid && deptcontrol.touched) ||
+          (employeeForm.value.department == 'null' && deptcontrol.touched)
+        "
         >Department</label
       >
-      <select class="form-control" id="department" name="department" appSelectValidator [(ngModel)]="employee.department" #deptcontrol="ngModel"
-        [class.invalidBorder]="(deptcontrol.invalid && deptcontrol.touched) || (employeeForm.value.department == 'null' && deptcontrol.touched)">
-      <option  value="null">Select Depaetment</option>
+      <select
+        class="form-control"
+        id="department"
+        name="department"
+        appSelectValidator
+        [(ngModel)]="employee.department"
+        #deptcontrol="ngModel"
+        [class.invalidBorder]="
+          (deptcontrol.invalid && deptcontrol.touched) ||
+          (employeeForm.value.department == 'null' && deptcontrol.touched)
+        "
+      >
+        <option value="null">Select Depaetment</option>
         <option *ngFor="let dept of departments" [value]="dept.id">
           {{ dept.name }}
         </option>
       </select>
       <span
-        [class.invalidColor]="(deptcontrol.invalid && deptcontrol.touched) || (employeeForm.value.department == 'null' && deptcontrol.touched)"
-        *ngIf="(deptcontrol.invalid && deptcontrol.touched )|| (employeeForm.value.department == 'null' && deptcontrol.touched)"
+        [class.invalidColor]="
+          (deptcontrol.invalid && deptcontrol.touched) ||
+          (employeeForm.value.department == 'null' && deptcontrol.touched)
+        "
+        *ngIf="
+          (deptcontrol.invalid && deptcontrol.touched) ||
+          (employeeForm.value.department == 'null' && deptcontrol.touched)
+        "
         >Required Field</span
       >
     </div>
@@ -213,8 +233,13 @@
     <div class="form-group mb-3">
       <div class="form-control">
         <label for="isActive" class="checkbox-inline">
-          <input type="checkbox" [(ngModel)]="employee.isActive" id= "isActive" name="isActive" /> is
-          Active
+          <input
+            type="checkbox"
+            [(ngModel)]="employee.isActive"
+            id="isActive"
+            name="isActive"
+          />
+          is Active
         </label>
       </div>
     </div>
@@ -256,46 +281,86 @@
       <img [src]="employee.photoPath" class="imageClass" *ngIf="previewPhoto" />
     </div>
 
+    <div
+      ngModelGroup="passwordGroup"
+      [class.invalidColor]="(passwordcontrol.invalid  && passwordcontrol.touched) && (cnfpasswordcontrol.invalid && !cnfpasswordcontrol.errors?.['required'] && cnfpasswordcontrol.touched) && (!cnfpasswordcontrol.errors?.['required'])"
+    >
+      <div class="form-group my-3">
+        <label
+          [class.invalidColor]="(passwordcontrol.invalid && passwordcontrol.touched) || (cnfpasswordcontrol.invalid && !cnfpasswordcontrol.errors?.['required'] && cnfpasswordcontrol.touched)"
+          for="password"
+          class="control-label"
+          >Password</label
+        >
+        <input
+          (input)="cnfpasswordcontrol.control.updateValueAndValidity()"
+          required
+          [class.invalidBorder]="(passwordcontrol.invalid && passwordcontrol.touched) || (cnfpasswordcontrol.invalid && !cnfpasswordcontrol.errors?.['required']  && cnfpasswordcontrol.touched) || (cnfpasswordcontrol.invalid && cnfpasswordcontrol.touched) && (!cnfpasswordcontrol.errors?.['required'])"
+          maxlength="15"
+          minlength="8"
+          type="password"
+          class="form-control"
+          name="password"
+          id="password"
+          [(ngModel)]="employee.password"
+          #passwordcontrol="ngModel"
+        />
+        <span
+          [class.invalidColor]="passwordcontrol.errors?.['required']  && passwordcontrol.touched"
+          *ngIf="passwordcontrol.errors?.['required']  && passwordcontrol.touched"
+          >Required Field</span
+        >
+        <span
+          [class.invalidColor]="passwordcontrol.errors?.['minlength']  && passwordcontrol.touched"
+          *ngIf="passwordcontrol.errors?.['minlength']  && passwordcontrol.touched"
+          >Min length is 8</span
+        >
+      </div>
 
-    <div class="form-group my-3">
-      <label [class.invalidColor]="passwordcontrol.errors?.['required']  && passwordcontrol.touched" for="password" class="control-label ">Password</label>
-      <input required [class.invalidBorder]="passwordcontrol.invalid && passwordcontrol.touched" maxlength="15" minlength="8"  type="password" class="form-control" name="password" id="password" [(ngModel)] = "employee.password" #passwordcontrol ="ngModel">
-      <span
-      [class.invalidColor]="passwordcontrol.errors?.['required']  && passwordcontrol.touched"
-        *ngIf="passwordcontrol.errors?.['required']  && passwordcontrol.touched"
-        >Required Field</span
-      >
-      <span
-      [class.invalidColor]="passwordcontrol.errors?.['minlength']  && passwordcontrol.touched"
-        *ngIf="passwordcontrol.errors?.['minlength']  && passwordcontrol.touched"
-        >Min length is 8</span
-      >
-      
-  
+      <div class="form-group my-3">
+        <label
+          [class.invalidColor]="
+            cnfpasswordcontrol.invalid && cnfpasswordcontrol.touched
+          "
+          for="cnfpassword"
+          class="control-label"
+          >Confirm Password</label
+        >
+        <input
+          appConfirmEqualValidator="password"
+          minlength="8"
+          maxlength="15"
+          required="{{ required }}"
+          [class.invalidBorder]="
+            cnfpasswordcontrol.invalid && cnfpasswordcontrol.touched
+          "
+          type="password"
+          class="form-control"
+          name="cnfpassword"
+          id="cnfpassword"
+          [(ngModel)]="employee.confirmPassword"
+          #cnfpasswordcontrol="ngModel"
+        />
+        <span
+          [class.invalidColor]="(cnfpasswordcontrol.errors?.['required']  && cnfpasswordcontrol.touched)"
+          *ngIf="cnfpasswordcontrol.errors?.['required']  && cnfpasswordcontrol.touched"
+          >Required Field</span
+        >
+
+        <span
+          [class.invalidColor]="cnfpasswordcontrol.errors?.['minlength']  && cnfpasswordcontrol.touched"
+          *ngIf="(cnfpasswordcontrol.errors?.['minlength']  && cnfpasswordcontrol.touched) && (!cnfpasswordcontrol.errors?.['required'])"
+        >
+          Min length is 8 /
+        </span>
+        <span
+          [class.invalidColor]="cnfpasswordcontrol.errors?.['notEqual']  && cnfpasswordcontrol.touched"
+          *ngIf="((cnfpasswordcontrol.errors?.['notEqual']) && cnfpasswordcontrol.touched) && (!cnfpasswordcontrol.errors?.['required'])"
+          >No Matching Field</span
+        >
+      </div>
     </div>
 
-    <div class="form-group my-3">
-      <label [class.invalidColor]="cnfpasswordcontrol.errors?.['required']  && cnfpasswordcontrol.touched"  for="cnfpassword" class="control-label ">Confirm Password</label>
-      <input appConfirmEqualValidator="password" minlength="8" maxlength="15" required="{{required}}" [class.invalidBorder]="cnfpasswordcontrol.invalid && cnfpasswordcontrol.touched"  type="password" class="form-control" name="cnfpassword" id="cnfpassword" [(ngModel)] = "employee.confirmPassword" #cnfpasswordcontrol ="ngModel">
-      <span
-      [class.invalidColor]="cnfpasswordcontrol.errors?.['required']  && cnfpasswordcontrol.touched"
-        *ngIf="cnfpasswordcontrol.errors?.['required']  && cnfpasswordcontrol.touched"
-        >Required Field</span
-      >
-
-      <span
-      [class.invalidColor]="cnfpasswordcontrol.errors?.['minlength']  && cnfpasswordcontrol.touched"
-        *ngIf="cnfpasswordcontrol.errors?.['minlength']  && cnfpasswordcontrol.touched"
-        > Min length is 8 / </span
-      >
-      <span
-      [class.invalidColor]="cnfpasswordcontrol.errors?.['notEqual']  && cnfpasswordcontrol.touched" 
-        *ngIf="(cnfpasswordcontrol.errors?.['notEqual']) && cnfpasswordcontrol.touched"
-        >No Matching Field</span
-      >
-    </div>
-
-    
     <button
       [disabled]="employeeForm.invalid"
       type="submit"
@@ -310,8 +375,7 @@
   Angular Generated Form Model: {{ employeeForm.value | json }}
 </div>
 <div class="mb-3 form-check">
-    <input type="checkbox" class="form-check-input" id="exampleCheck1" />
-    <label class="form-check-label" for="exampleCheck1">Check me out</label>
-  </div> 
- <!-- [disabled]="employeeForm.invalid" -->
-
+  <input type="checkbox" class="form-check-input" id="exampleCheck1" />
+  <label class="form-check-label" for="exampleCheck1">Check me out</label>
+</div>
+<!-- [disabled]="employeeForm.invalid" -->
