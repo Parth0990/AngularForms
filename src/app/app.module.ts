@@ -6,19 +6,32 @@ import { AppComponent } from './app.component';
 import { FormsModule } from '@angular/forms';
 import { ListEmployeesComponent } from './employees/list-employees.component';
 import { CreateEmployeeComponent } from './employees/create-employee.component';
-import { RouterModule,Routes } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 import { SelectRequiredValidatorDirective } from './shared/select.required.validator.directive';
 import { confirmEqualValidatorDirective } from './shared/confirm.equal.validator.directive';
 import { EmployeeService } from './employees/employee.service';
 import { DisplayEmployeeComponent } from './employees/display-employee.component';
 import { CreateEmployeeCanDeactivateGuardService } from './employees/create-employee-can-deactivate.service';
 import { EmployeeDetailsComponent } from './employees/employee-details.component';
+import { EmployeeFilterPipe } from './employees/employee-filter.pipe';
+import { EmployeeListResolverService } from './employees/employee-list-resolver.service';
+import { PageNotFoundComponent } from './page-not-found.component';
+import { EmployeeDetailsGuardService } from './employees/employee-details-guard.service';
 
-const appRoutes:Routes=[
-  { path:'list', component:ListEmployeesComponent },
-  { path:'create', component:CreateEmployeeComponent , canDeactivate: [CreateEmployeeCanDeactivateGuardService] },
-  { path:'employees/:id', component:EmployeeDetailsComponent },
-  { path:'', redirectTo: '/list', pathMatch:'full' },
+const appRoutes: Routes = [
+  {
+    path: 'list',
+    component: ListEmployeesComponent,
+    resolve: { employeeList: EmployeeListResolverService },
+  },
+  {
+    path: 'create',
+    component: CreateEmployeeComponent,
+    canDeactivate: [CreateEmployeeCanDeactivateGuardService],
+  },
+  { path: 'employees/:id', component: EmployeeDetailsComponent, canActivate: [EmployeeDetailsGuardService] },
+  { path: '', redirectTo: '/list', pathMatch: 'full' },
+  { path: 'notfound', component: PageNotFoundComponent },
 ];
 
 @NgModule({
@@ -29,7 +42,9 @@ const appRoutes:Routes=[
     SelectRequiredValidatorDirective,
     confirmEqualValidatorDirective,
     DisplayEmployeeComponent,
-    EmployeeDetailsComponent
+    EmployeeDetailsComponent,
+    EmployeeFilterPipe,
+    PageNotFoundComponent,
   ],
   imports: [
     BrowserModule,
@@ -37,7 +52,12 @@ const appRoutes:Routes=[
     FormsModule,
     RouterModule.forRoot(appRoutes),
   ],
-  providers: [EmployeeService , CreateEmployeeCanDeactivateGuardService],
-  bootstrap: [AppComponent]
+  providers: [
+    EmployeeService,
+    CreateEmployeeCanDeactivateGuardService,
+    EmployeeListResolverService,
+    EmployeeDetailsGuardService,
+  ],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

@@ -1,7 +1,11 @@
 <!-- <div class="panel panel-primary" (click)="handleClick()"> -->
-  <div class="panel panel-primary">
-<div class="panel-heading">
-    <h3 class="panel-title">{{ employee.name }}</h3>
+  <div class = "alert" role="alert" [class.alert-warning]="selectedEmployeeId === employee.id"
+  [class.alert-info]="selectedEmployeeId !== employee.id">Employee Id :- {{employee.id}}</div>
+<div class="alert"
+role="alert" [class.alert-danger]="selectedEmployeeId === employee.id"
+[class.alert-primary]="selectedEmployeeId !== employee.id">
+  <div class="panel-heading">
+    <h3 class="panel-title">{{ employee.name | uppercase}}</h3>
   </div>
   <div class="panel-body">
     <div class="col-md-10">

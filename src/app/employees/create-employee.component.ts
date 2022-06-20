@@ -8,62 +8,66 @@ import { EmployeeService } from './employee.service';
 @Component({
   selector: 'app-create-employee',
   templateUrl: './create-employee.component.html',
-  styleUrls: ['./create-employee.component.css']
+  styleUrls: ['./create-employee.component.css'],
 })
 export class CreateEmployeeComponent implements OnInit {
-
   @ViewChild('employeeForm') public createEmployeeForm: NgForm;
 
-  dateOfBirth: Date = new Date(2022, 0 , 30);
+  dateOfBirth: Date = new Date(2022, 0, 30);
   employee: Employee = {
     id: 0,
-    name:"",
-    gender: "",
-    email:"",
-    password: "",
-    phoneNumber:0,
-    confirmPassword: "",
-    contactPreference:"",
+    name: '',
+    gender: '',
+    email: '',
+    password: '',
+    phoneNumber: '',
+    confirmPassword: '',
+    contactPreference: '',
     dateOfBirth: this.dateOfBirth,
-    department:"null",
-    isActive:false,
-    photoPath:""
+    department: 'null',
+    isActive: false,
+    photoPath: '',
+  };
+
+  departments: Department[] = [
+    { id: '1', name: 'Help Desk' },
+    { id: '2', name: 'HR' },
+    { id: '3', name: 'IT' },
+    { id: '4', name: 'Payroll' },
+  ];
+
+  previewPhoto = false;
+
+  isActive = true;
+  photoPath = '';
+
+  togglePhotoPreview() {
+    this.previewPhoto = !this.previewPhoto;
   }
 
-  departments: Department[]=[
-    {id:'1',name:'Help Desk'},
-    {id:'2',name:'HR'},
-    {id:'3',name:'IT'},
-    {id:'4',name:'Payroll'},
-  ]  
+  required: boolean = true;
 
-  previewPhoto=false;
+  constructor(
+    private _employeeService: EmployeeService,
+    private _router: Router
+  ) {}
 
-isActive=true;
-photoPath="";
-
-togglePhotoPreview()
-{
-  this.previewPhoto=!this.previewPhoto
-}
-
-required:boolean=true;
-
-  constructor(private _employeeService: EmployeeService, private _router:Router) { }
-
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   // saveEmployee(empForm:NgForm) {
   //   console.log(empForm.value);
   //   console.log(empForm);
   // }
 
-  saveEmployees(): void{
-    this._employeeService.save(this.employee);
+  saveEmployees(): void {
+    const newEmployee: Employee = Object.assign({}, this.employee);
+    this._employeeService.save(newEmployee);
+    // empForm.reset();
+    // this.createEmployeeForm.reset({
+    //   name : 'Parth',
+    //   contactPreference: 'email'
+    // });
+    this.createEmployeeForm.reset();
     this._router.navigate(['list']);
   }
-
-    
-  
 }

@@ -7,6 +7,7 @@ import {
   Output,
   SimpleChanges,
 } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Employee } from '../models/employee.model';
 
 @Component({
@@ -15,7 +16,6 @@ import { Employee } from '../models/employee.model';
   styleUrls: ['./display-employee.component.css'],
 })
 export class DisplayEmployeeComponent implements OnInit {
-  
   // private _employeeId: number;
 
   // @Input()
@@ -23,13 +23,14 @@ export class DisplayEmployeeComponent implements OnInit {
   //   console.log('employeeId changed from ' + JSON.stringify(this._employeeId) + ' to ' + JSON.stringify(val))
   //   this._employeeId = val;
   // }
-  
+
   // get employeeId(): number {
   //   return this._employeeId;
   // }
 
   // private _employee: Employee;
 
+  selectedEmployeeId: number;
   @Input()
   employee: Employee;
 
@@ -45,9 +46,11 @@ export class DisplayEmployeeComponent implements OnInit {
   //   return this._employee;
   // }
 
-  constructor() {}
+  constructor(private _route: ActivatedRoute) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.selectedEmployeeId = +this._route.snapshot.paramMap.get('id');
+  }
 
   // ngOnChanges(changes: SimpleChanges): void {
   //   for(const propName of Object.keys(changes)) {
@@ -79,5 +82,4 @@ export class DisplayEmployeeComponent implements OnInit {
   getEmployeeNameAndGender(): string {
     return this.employee.name + ' ' + this.employee.gender;
   }
-
 }

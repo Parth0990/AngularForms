@@ -2,13 +2,31 @@
   {{ dataFromChild.name + ' ' + dataFromChild.gender }}
 </h1> -->
 <h1 #h1Variable></h1>
-
-<div *ngFor="let employee of employees" (click)=" h1Variable.innerHTML = childComponent.getEmployeeNameAndGender()">
-  <div (click)="onClick(employee.id)" class="pointerCursor">
-  <app-display-employee [employee]="employee" #childComponent></app-display-employee>
+<div class="foprm-group">
+  <input
+    type="text"
+    class="form-control"
+    placeholder="Search By Name"
+    [(ngModel)]="searchTerm"
+  />
 </div>
+<div class="form-group">
+  <button class="btn btn-primary my-3" (click)="changeEmployeeName()">
+    Change Employee Name
+  </button>
 </div>
-
+<div
+  *ngFor="let employee of filteredEmployees"
+  (click)="h1Variable.innerHTML = childComponent.getEmployeeNameAndGender()"
+  (mousemove)="onMouseMove()"
+>
+  <div (click)="onClick(employee.id)" class="pointerCursor my-3">
+    <app-display-employee
+      [employee]="employee"
+      #childComponent
+    ></app-display-employee>
+  </div>
+</div>
 
 <!-- 
 <button (click)="nextEmployee()" class="btn btn-primary">
