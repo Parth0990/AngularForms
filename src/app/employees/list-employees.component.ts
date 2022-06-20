@@ -94,11 +94,11 @@ export class ListEmployeesComponent implements OnInit {
   //   this.dataFromChild = eventData;
   // }
 
-  onClick(employeeId: number) {
-    this._router.navigate(['/employees', employeeId], {
-      queryParams: { searchTerm: this.searchTerm, testParam: 'testValue' },
-    });
-  }
+  // onClick(employeeId: number) {
+  //   this._router.navigate(['/employees', employeeId], {
+  //     queryParams: { searchTerm: this.searchTerm, testParam: 'testValue' },
+  //   });
+  // }
 
   filteredEmployees: Employee[];
   private _searchTerm: string;
@@ -125,5 +125,5 @@ export class ListEmployeesComponent implements OnInit {
     // this.employees = newEmployeeArray;
   }
 
-  onMouseMove() {}
+  // onMouseMove() {}
 }

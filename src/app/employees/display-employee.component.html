@@ -1,11 +1,20 @@
 <!-- <div class="panel panel-primary" (click)="handleClick()"> -->
-  <div class = "alert" role="alert" [class.alert-warning]="selectedEmployeeId === employee.id"
-  [class.alert-info]="selectedEmployeeId !== employee.id">Employee Id :- {{employee.id}}</div>
-<div class="alert"
-role="alert" [class.alert-danger]="selectedEmployeeId === employee.id"
-[class.alert-primary]="selectedEmployeeId !== employee.id">
+<div
+  class="alert"
+  role="alert"
+  [class.alert-warning]="selectedEmployeeId === employee.id"
+  [class.alert-info]="selectedEmployeeId !== employee.id"
+>
+  Employee Id :- {{ employee.id }}
+</div>
+<div
+  class="alert"
+  role="alert"
+  [class.alert-danger]="selectedEmployeeId === employee.id"
+  [class.alert-primary]="selectedEmployeeId !== employee.id"
+>
   <div class="panel-heading">
-    <h3 class="panel-title">{{ employee.name | uppercase}}</h3>
+    <h3 class="panel-title">{{ employee.name | uppercase }}</h3>
   </div>
   <div class="panel-body">
     <div class="col-md-10">
@@ -58,5 +67,12 @@ role="alert" [class.alert-danger]="selectedEmployeeId === employee.id"
         </div>
       </div>
     </div>
+  </div>
+  <div class="panel-footer">
+    <button class="btn btn-primary mx-2 my-3" (click)="viewEmployee()">
+      View
+    </button>
+    <button class="btn btn-primary mx-2 my-3">Edit</button>
+    <button class="btn btn-danger mx-2 my-3">Delete</button>
   </div>
 </div>
