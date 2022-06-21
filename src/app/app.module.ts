@@ -20,6 +20,8 @@ import { EmployeeDetailsGuardService } from './employees/employee-details-guard.
 import {MatButtonModule} from '@angular/material/button';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatCardModule} from '@angular/material/card';
+import { AccordionComponent } from './shared/accordion.component';
+import { HttpClientModule } from '@angular/common/http'
 
 const appRoutes: Routes = [
   {
@@ -48,6 +50,7 @@ const appRoutes: Routes = [
     EmployeeDetailsComponent,
     EmployeeFilterPipe,
     PageNotFoundComponent,
+    AccordionComponent,
   ],
   imports: [
     BrowserModule,
@@ -55,6 +58,7 @@ const appRoutes: Routes = [
     FormsModule,
     MatButtonModule,
     MatCardModule,
+    HttpClientModule,
     RouterModule.forRoot(appRoutes),
     BrowserAnimationsModule,
   ],

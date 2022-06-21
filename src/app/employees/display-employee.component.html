@@ -1,5 +1,71 @@
 <!-- <div class="panel panel-primary" (click)="handleClick()"> -->
-<div
+<app-accordion [title]="employee.name" [isHidden]="true" [empId]="employee.id" [hasJustViewed]="selectedEmployeeId === employee.id">
+  <div class="col-md-10 myPanelBody">
+    <div class="row vertical-align">
+      <div class="col-md-4">
+        <img class="imageClass" [src]="employee.photoPath" />
+      </div>
+
+      <div class="col-md-8">
+        <div class="row">
+          <div class="col-md-6">Gender</div>
+          <div class="col-md-6">: {{ employee.gender }}</div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6">Date of Birth</div>
+          <div class="col-md-6">: {{ employee.dateOfBirth | date }}</div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6">Contact Prefernce</div>
+          <div class="col-md-6">: {{ employee.contactPreference }}</div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6">Phone</div>
+          <div class="col-md-6">: {{ employee.phone }}</div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6">Email</div>
+          <div class="col-md-6">: {{ employee.email }}</div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6">Department</div>
+          <div class="col-md-6" [ngSwitch]="employee.department">
+            : <span *ngSwitchCase="1">Help Desk</span>
+            <span *ngSwitchCase="2">HR</span>
+            <span *ngSwitchCase="3">IT</span>
+            <span *ngSwitchCase="4">PayRoll</span>
+            <span *ngSwitchDefault>N/A</span>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6">Is Active</div>
+          <div class="col-md-6">: {{ employee.isActive }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="myPanelFooter">
+    <button class="btn btn-primary mx-2 my-3" (click)="viewEmployee()">
+      View
+    </button>
+    <button class="btn btn-primary mx-2 my-3" (click)="editEmployee()">Edit</button>
+    <button *ngIf="!confirmDelete" class="btn btn-danger mx-2 my-3" (click)="confirmDelete=true">Delete</button>
+    <br>
+    <span *ngIf="confirmDelete">
+      <span class="mx-2 my-3" >Are you sure you want to Delete?</span>
+      <br>
+      <button class="btn btn-danger mx-2 my-3" (click)="deleteEmployee()">Yes</button>
+      <button class="btn btn-primary mx-2 my-3" (click)="confirmDelete=false">No</button>
+    </span>
+  </div>
+</app-accordion>
+  <!-- <div
   class="alert"
   role="alert"
   [class.alert-warning]="selectedEmployeeId === employee.id"
@@ -13,75 +79,16 @@
   [class.alert-danger]="selectedEmployeeId === employee.id"
   [class.alert-primary]="selectedEmployeeId !== employee.id"
   
->
-  <div class="panel-heading pointer" (click)="isHidden = !isHidden" style="background-color: limegreen;">
+> -->
+  <!-- <div class="panel-heading" style="background-color: limegreen;">
     <h3 class="panel-title mx-3" >{{ employee.name | uppercase }}</h3>
   </div>
-  <div class="panel-body" [hidden]="isHidden">
-    <div class="col-md-10">
-      <div class="row vertical-align">
-        <div class="col-md-4">
-          <img class="imageClass" [src]="employee.photoPath" />
-        </div>
-
-        <div class="col-md-8">
-          <div class="row">
-            <div class="col-md-6">Gender</div>
-            <div class="col-md-6">: {{ employee.gender }}</div>
-          </div>
-
-          <div class="row">
-            <div class="col-md-6">Date of Birth</div>
-            <div class="col-md-6">: {{ employee.dateOfBirth | date }}</div>
-          </div>
-
-          <div class="row">
-            <div class="col-md-6">Contact Prefernce</div>
-            <div class="col-md-6">: {{ employee.contactPreference }}</div>
-          </div>
-
-          <div class="row">
-            <div class="col-md-6">Phone</div>
-            <div class="col-md-6">: {{ employee.phoneNumber }}</div>
-          </div>
-
-          <div class="row">
-            <div class="col-md-6">Email</div>
-            <div class="col-md-6">: {{ employee.email }}</div>
-          </div>
-
-          <div class="row">
-            <div class="col-md-6">Department</div>
-            <div class="col-md-6" [ngSwitch]="employee.department">
-              : <span *ngSwitchCase="1">Help Desk</span>
-              <span *ngSwitchCase="2">HR</span>
-              <span *ngSwitchCase="3">IT</span>
-              <span *ngSwitchCase="4">PayRoll</span>
-              <span *ngSwitchDefault>N/A</span>
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="col-md-6">Is Active</div>
-            <div class="col-md-6">: {{ employee.isActive }}</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="panel-footer" [hidden]="isHidden">
-    <button class="btn btn-primary mx-2 my-3" (click)="viewEmployee()">
-      View
-    </button>
-    <button class="btn btn-primary mx-2 my-3" (click)="editEmployee()">Edit</button>
-    <button *ngIf="!confirmDelete" class="btn btn-danger mx-2 my-3" (click)="confirmDelete=true">Delete</button>
-    <br>
-    <span *ngIf="confirmDelete">
-      <span class="mx-2 my-3" >Are you sure you want to Delete?</span>
-      <br>
-      <button class="btn btn-danger mx-2 my-3" (click)="deleteEmployee()">Yes</button>
-      <button class="btn btn-primary mx-2 my-3" (click)="confirmDelete=false">No</button>
-    </span>
+  <div class="panel-body">
     
   </div>
-</div>
+  <div class="panel-footer">
+    
+    
+  </div>
+</div> -->
+

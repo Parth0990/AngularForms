@@ -13,7 +13,7 @@ import { EmployeeService } from './employee.service';
 export class CreateEmployeeComponent implements OnInit {
   @ViewChild('employeeForm') public createEmployeeForm: NgForm;
 
-  dateOfBirth: Date = new Date(2022, 0, 30);
+  // dateOfBirth: Date = new Date();
   employee: Employee;
   panelTitle: string;
   departments: Department[] = [
@@ -55,10 +55,10 @@ export class CreateEmployeeComponent implements OnInit {
         gender: '',
         email: '',
         password: '',
-        phoneNumber: '',
+        phone: '',
         confirmPassword: '',
         contactPreference: '',
-        dateOfBirth: this.dateOfBirth,
+        dateOfBirth: null,
         department: 'null',
         isActive: false,
         photoPath: '',

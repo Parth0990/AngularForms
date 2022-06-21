@@ -1,4 +1,3 @@
-<mat-card>
   <div class="panel-heading my-2" style="background-color: limegreen;  color: white;"> 
     <h3 class="mx-3"> {{panelTitle}} </h3> 
   </div>
@@ -103,39 +102,39 @@
         *ngIf="employeeForm.value.contactPreference == 'Phone'"
       >
         <label
-          for="phoneNumber"
+          for="phone"
           class="form-label"
           [class.invalidColor]="
-            phoneNumbercontrol.invalid && phoneNumbercontrol.touched
+            phonecontrol.invalid && phonecontrol.touched
           "
           >Phone Number</label
         >
         <input
           type="tel"
           pattern="^[789]\d{9}$"
-          [(ngModel)]="employee.phoneNumber"
-          #phoneNumbercontrol="ngModel"
-          value="phoneNumber"
-          name="phoneNumber"
+          [(ngModel)]="employee.phone"
+          #phonecontrol="ngModel"
+          value="phone"
+          name="phone"
           class="form-control"
-          id="phoneNumber"
+          id="phone"
           required="{{ employeeForm.value.contactPreference == 'Phone' }}"
           [class.invalidBorder]="
-            phoneNumbercontrol.invalid && phoneNumbercontrol.touched
+            phonecontrol.invalid && phonecontrol.touched
           "
         />
         <span
           [class.invalidColor]="
-            phoneNumbercontrol.errors?.['required'] && phoneNumbercontrol.touched
+            phonecontrol.errors?.['required'] && phonecontrol.touched
           "
-          *ngIf="phoneNumbercontrol.errors?.['required'] && phoneNumbercontrol.touched"
+          *ngIf="phonecontrol.errors?.['required'] && phonecontrol.touched"
           >Required Field</span
         >
 
         <span
           [class.invalidColor]="
-          phoneNumbercontrol.errors?.['pattern']  && phoneNumbercontrol.touched  "
-          *ngIf="phoneNumbercontrol.touched && phoneNumbercontrol.errors?.['pattern']"
+          phonecontrol.errors?.['pattern']  && phonecontrol.touched  "
+          *ngIf="phonecontrol.touched && phonecontrol.errors?.['pattern']"
         >
           Match Pattern
         </span>
@@ -183,6 +182,7 @@
       <input
         id="dateOfBirth"
         name="dateOfBirth"
+        value="dateOfBirth"
         [(ngModel)]="employee.dateOfBirth"
         class="form-control"
         type="date"
@@ -386,4 +386,3 @@
   <label class="form-check-label" for="exampleCheck1">Check me out</label>
 </div> -->
 <!-- [disabled]="employeeForm.invalid" -->
-</mat-card>
