@@ -67,7 +67,10 @@ export class CreateEmployeeComponent implements OnInit {
       // this.createEmployeeForm.reset();
     }else {
       this.panelTitle = "Edit Employee";
-      this.employee = Object.assign({}, this._employeeService.getEmployee(id));
+      //this.employee = Object.assign({}, this._employeeService.getEmployee(id));
+      this._employeeService.getEmployee(id).subscribe((data)=>{
+        this.employee=data;
+      })
     }
   }
 

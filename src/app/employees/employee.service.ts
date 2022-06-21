@@ -50,8 +50,9 @@ export class EmployeeService {
        return this._httpClient.get<Employee[]>('https://localhost:44308/api/employee');
     }
 
-    getEmployee(id : number): Employee {
-      return this.listEmployees.find(e => e.id === id);
+    getEmployee(id : number): Observable<Employee> {
+      //return this.listEmployees.find(e => e.id === id);
+      return this._httpClient.get<Employee>('https://localhost:44308/api/employee/'+id);
   }
 
     save(employee: Employee) {
