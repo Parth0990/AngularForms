@@ -17,6 +17,9 @@ import { EmployeeFilterPipe } from './employees/employee-filter.pipe';
 import { EmployeeListResolverService } from './employees/employee-list-resolver.service';
 import { PageNotFoundComponent } from './page-not-found.component';
 import { EmployeeDetailsGuardService } from './employees/employee-details-guard.service';
+import {MatButtonModule} from '@angular/material/button';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MatCardModule} from '@angular/material/card';
 
 const appRoutes: Routes = [
   {
@@ -25,7 +28,7 @@ const appRoutes: Routes = [
     resolve: { employeeList: EmployeeListResolverService },
   },
   {
-    path: 'create',
+    path: 'edit/:id',
     component: CreateEmployeeComponent,
     canDeactivate: [CreateEmployeeCanDeactivateGuardService],
   },
@@ -50,7 +53,10 @@ const appRoutes: Routes = [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
+    MatButtonModule,
+    MatCardModule,
     RouterModule.forRoot(appRoutes),
+    BrowserAnimationsModule,
   ],
   providers: [
     EmployeeService,

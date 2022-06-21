@@ -12,11 +12,12 @@
   role="alert"
   [class.alert-danger]="selectedEmployeeId === employee.id"
   [class.alert-primary]="selectedEmployeeId !== employee.id"
+  
 >
-  <div class="panel-heading">
-    <h3 class="panel-title">{{ employee.name | uppercase }}</h3>
+  <div class="panel-heading pointer" (click)="isHidden = !isHidden" style="background-color: limegreen;">
+    <h3 class="panel-title mx-3" >{{ employee.name | uppercase }}</h3>
   </div>
-  <div class="panel-body">
+  <div class="panel-body" [hidden]="isHidden">
     <div class="col-md-10">
       <div class="row vertical-align">
         <div class="col-md-4">
@@ -68,11 +69,19 @@
       </div>
     </div>
   </div>
-  <div class="panel-footer">
+  <div class="panel-footer" [hidden]="isHidden">
     <button class="btn btn-primary mx-2 my-3" (click)="viewEmployee()">
       View
     </button>
-    <button class="btn btn-primary mx-2 my-3">Edit</button>
-    <button class="btn btn-danger mx-2 my-3">Delete</button>
+    <button class="btn btn-primary mx-2 my-3" (click)="editEmployee()">Edit</button>
+    <button *ngIf="!confirmDelete" class="btn btn-danger mx-2 my-3" (click)="confirmDelete=true">Delete</button>
+    <br>
+    <span *ngIf="confirmDelete">
+      <span class="mx-2 my-3" >Are you sure you want to Delete?</span>
+      <br>
+      <button class="btn btn-danger mx-2 my-3" (click)="deleteEmployee()">Yes</button>
+      <button class="btn btn-primary mx-2 my-3" (click)="confirmDelete=false">No</button>
+    </span>
+    
   </div>
 </div>

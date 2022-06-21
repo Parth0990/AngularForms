@@ -1,3 +1,7 @@
+<mat-card>
+  <div class="panel-heading my-2" style="background-color: limegreen;  color: white;"> 
+    <h3 class="mx-3"> {{panelTitle}} </h3> 
+  </div>
 <form #employeeForm="ngForm" (ngSubmit)="saveEmployees()">
   <div class="mb-3 form-group">
     <div class="mb-3">
@@ -34,7 +38,7 @@
         <label class="radio-inline mx-3">
           <input
             type="radio"
-            value="phoneNumber"
+            value="Phone"
             [(ngModel)]="employee.contactPreference"
             name="contactPreference"
             required="{{ required }}"
@@ -47,7 +51,7 @@
         <label for="exampleInputEmail1" class="radio-inline"
           ><input
             type="radio"
-            value="email"
+            value="Email"
             [(ngModel)]="employee.contactPreference"
             name="contactPreference"
             required="{{ required }}"
@@ -60,7 +64,7 @@
     </div>
 
     <div>
-      <div class="mb-3" *ngIf="employeeForm.value.contactPreference == 'email'">
+      <div class="mb-3" *ngIf="employeeForm.value.contactPreference == 'Email'">
         <label
           for="exampleInputEmail1"
           class="form-label"
@@ -73,9 +77,10 @@
           name="email"
           pattern="^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$"
           class="form-control"
+          value="Email"
           maxlength="30"
           id="exampleInputEmail1"
-          required="{{ employeeForm.value.contactPreference == 'email' }}"
+          required="{{ employeeForm.value.contactPreference == 'Email' }}"
           [class.invalidBorder]="emailcontrol.invalid && emailcontrol.touched"
           #emailcontrol="ngModel"
           aria-describedby="emailHelp"
@@ -95,7 +100,7 @@
 
       <div
         class="mb-3"
-        *ngIf="employeeForm.value.contactPreference == 'phoneNumber'"
+        *ngIf="employeeForm.value.contactPreference == 'Phone'"
       >
         <label
           for="phoneNumber"
@@ -110,10 +115,11 @@
           pattern="^[789]\d{9}$"
           [(ngModel)]="employee.phoneNumber"
           #phoneNumbercontrol="ngModel"
+          value="phoneNumber"
           name="phoneNumber"
           class="form-control"
           id="phoneNumber"
-          required="{{ employeeForm.value.contactPreference == 'phoneNumber' }}"
+          required="{{ employeeForm.value.contactPreference == 'Phone' }}"
           [class.invalidBorder]="
             phoneNumbercontrol.invalid && phoneNumbercontrol.touched
           "
@@ -142,7 +148,7 @@
         <label for="male" class="radio-inline mx-3"
           ><input
             type="radio"
-            value="male"
+            value="Male"
             id="male"
             [(ngModel)]="employee.gender"
             name="gender"
@@ -155,7 +161,7 @@
         <label for="female" class="radio-inline"
           ><input
             type="radio"
-            value="female"
+            value="Female"
             id="female"
             [(ngModel)]="employee.gender"
             name="gender"
@@ -272,13 +278,14 @@
         type="button"
         (click)="togglePhotoPreview()"
         class="btn btn-primary"
+        *ngIf="employee.photoPath !== '' && employee.photoPath !== null"
       >
         {{ previewPhoto ? "Hide" : "Show" }} Preview
       </button>
     </div>
 
     <div class="form-group mb-3">
-      <img [src]="employee.photoPath" class="imageClass" *ngIf="previewPhoto" />
+      <img [src]="employee.photoPath" class="imageClass" *ngIf="previewPhoto && employee.photoPath !== '' && employee.photoPath !== null" />
     </div>
 
     <div
@@ -379,3 +386,4 @@
   <label class="form-check-label" for="exampleCheck1">Check me out</label>
 </div> -->
 <!-- [disabled]="employeeForm.invalid" -->
+</mat-card>

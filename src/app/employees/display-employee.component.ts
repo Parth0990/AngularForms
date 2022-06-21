@@ -9,6 +9,7 @@ import {
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Employee } from '../models/employee.model';
+import { EmployeeService } from './employee.service';
 
 @Component({
   selector: 'app-display-employee',
@@ -46,7 +47,11 @@ export class DisplayEmployeeComponent implements OnInit {
   //   return this._employee;
   // }
 
-  constructor(private _route: ActivatedRoute, private _router: Router) {}
+  constructor(
+    private _route: ActivatedRoute,
+    private _router: Router,
+    private _employeeSevice: EmployeeService
+  ) {}
 
   ngOnInit(): void {
     this.selectedEmployeeId = +this._route.snapshot.paramMap.get('id');
@@ -88,7 +93,24 @@ export class DisplayEmployeeComponent implements OnInit {
 
   viewEmployee() {
     this._router.navigate(['/employees', this.employee.id], {
-      queryParams: { searchTerm: this.searchTerm }
+      queryParams: { searchTerm: this.searchTerm },
     });
+  }
+
+  editEmployee() {
+    this._router.navigate(['/edit', this.employee.id], {
+      // queryParams: { searchTerm: this.searchTerm }
+    });
+  }
+
+  @Output()
+  notifyDelete: EventEmitter<number> = new EventEmitter<number>();
+  confirmDelete = false;
+  // panelExpanded = true;
+  isHidden = false;
+
+  deleteEmployee() {
+    this._employeeSevice.deleteEmployee(this.employee.id);
+    this.notifyDelete.emit(this.employee.id);
   }
 }

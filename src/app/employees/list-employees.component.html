@@ -25,6 +25,7 @@
     [employee]="employee"
     [searchTerm]="searchTerm"
     #childComponent
+    (notifyDelete)="onDeleteNotification($event)"
   ></app-display-employee>
 </div>
 
