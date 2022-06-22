@@ -41,14 +41,14 @@ export class CreateEmployeeComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this._route.paramMap.subscribe(parameterMap => {
+    this._route.paramMap.subscribe((parameterMap) => {
       const id = +parameterMap.get('id');
       this.getEmployee(id);
     });
   }
 
-  private getEmployee(id: number){
-    if(id === 0) {
+  private getEmployee(id: number) {
+    if (id === 0) {
       this.employee = {
         id: 0,
         name: '',
@@ -63,14 +63,14 @@ export class CreateEmployeeComponent implements OnInit {
         isActive: false,
         photoPath: '',
       };
-      this.panelTitle = "Create Employee";
+      this.panelTitle = 'Create Employee';
       // this.createEmployeeForm.reset();
-    }else {
-      this.panelTitle = "Edit Employee";
+    } else {
+      this.panelTitle = 'Edit Employee';
       //this.employee = Object.assign({}, this._employeeService.getEmployee(id));
-      this._employeeService.getEmployee(id).subscribe((data)=>{
-        this.employee=data;
-      })
+      this._employeeService.getEmployee(id).subscribe((data) => {
+        this.employee = data;
+      });
     }
   }
 
@@ -81,14 +81,22 @@ export class CreateEmployeeComponent implements OnInit {
 
   saveEmployees(): void {
     const newEmployee: Employee = Object.assign({}, this.employee);
-    this._employeeService.save(newEmployee);
-    console.log(newEmployee)
+    console.log(this.createEmployeeForm.value);
+    console.log(this.createEmployeeForm);
+    this._employeeService.save(newEmployee).subscribe(
+      (data)=> {
+        console.log("From Server: ");
+        console.log(data);
+        this.createEmployeeForm.reset();
+        this._router.navigate(['list']);
+      }
+    );
+    
+    
     // empForm.reset();
     // this.createEmployeeForm.reset({
     //   name : 'Parth',
     //   contactPreference: 'email'
     // });
-    this.createEmployeeForm.reset();
-    this._router.navigate(['list']);
   }
 }

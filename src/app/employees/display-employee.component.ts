@@ -109,8 +109,15 @@ export class DisplayEmployeeComponent implements OnInit {
   // panelExpanded = true;
   isHidden = false;
 
-  deleteEmployee() {
-    this._employeeSevice.deleteEmployee(this.employee.id);
+  deleteEmployee(){
+    this._employeeSevice.deleteEmployee(this.employee.id).subscribe(
+      (data)=> {
+        console.log("From Server: ");
+        console.log(data);
+        // this.createEmployeeForm.reset();
+        // this._router.navigate(['list']);
+      },
+    );
     this.notifyDelete.emit(this.employee.id);
   }
 }

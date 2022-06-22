@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Employee } from '../models/employee.model';
 import { EmployeeService } from './employee.service';
+import { ResolvedEmployeeList } from './resolved-employeelist.model';
 
 @Component({
   selector: 'app-list-employees',
@@ -49,13 +50,30 @@ export class ListEmployeesComponent implements OnInit {
   // employeeToDisplay: Employee;
   // private arrayIndex = 1;
 
+  error: string;
+
   constructor(
     private _employeeService: EmployeeService,
     private _router: Router,
     private _route: ActivatedRoute
   ) {
-    this.employees = this._route.snapshot.data['employeeList'];
-    if (this._route.snapshot.queryParamMap.has('searchTerm')) {
+  //  const resolvedEmployeList: ResolvedEmployeeList = this.employees = this._route.snapshot.data['employeeList'];
+  
+  //  if(resolvedEmployeList.error == null){
+  //   this.employees = resolvedEmployeList.employeeList;
+  //  }
+  //  else {
+  //   this.error = resolvedEmployeList.error;
+  //  }
+  const resolvedData: Employee[] | string = this.employees = this._route.snapshot.data['employeeList'];
+  if(Array.isArray(resolvedData)) {
+    this.employees = resolvedData;
+  }
+  else {
+    this.error = resolvedData;
+  }
+   
+   if (this._route.snapshot.queryParamMap.has('searchTerm')) {
       this.searchTerm = this._route.snapshot.queryParamMap.get('searchTerm');
     } else {
       this.filteredEmployees = this.employees;

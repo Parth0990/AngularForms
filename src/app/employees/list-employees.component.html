@@ -29,6 +29,10 @@
   ></app-display-employee>
 </div>
 
+<div class="my-3" *ngIf="error">
+  <h1> {{ error }} </h1> 
+</div>
+
 <!-- 
 <button (click)="nextEmployee()" class="btn btn-primary">
   View Next Employee
